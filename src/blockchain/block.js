@@ -1,4 +1,3 @@
-// src/blockchain/block.js
 // Defines the Block class
 const crypto = require('crypto');
 

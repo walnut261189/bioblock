@@ -1,15 +1,18 @@
 // Initializes the server and routes
 const express = require('express');
+const mongoose = require('mongoose');
 const medicalRecordsRouter = require('./routes/medicalRecords');
 
 const app = express();
 app.use(express.json());
 
-// Routes
-app.use('/api/medical', medicalRecordsRouter);
+// MongoDB connection
+const DB_URI = 'mongodb://localhost:27017/medicalDB';
+mongoose.connect(DB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
 
-// Server setup
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+mongoose.connection.once('open', () => {
+    console.log('Connected to MongoDB');
 });
