@@ -1,10 +1,6 @@
 # bioblock
 A blockchain-based platform for secure storage and management of medical data, ensuring privacy, transparency, and seamless access for patients and healthcare providers.
 
-# Blockchain Medical Data
-
-A blockchain-based platform for securely storing and managing medical data. This project leverages blockchain technology to ensure data integrity, transparency, and accessibility for medical records.
-
 ---
 
 ## Features
