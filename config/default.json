@@ -1,4 +1,5 @@
 {
     "port": 3000,
+    "p2p_port":6000,
     "dbURI": "mongodb://localhost:27017/medicalDB"
 }
