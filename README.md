@@ -1,40 +1,184 @@
 # bioblock
 A blockchain-based platform for secure storage and management of medical data, ensuring privacy, transparency, and seamless access for patients and healthcare providers.
 
-# project structure
+# Blockchain Medical Data
+
+A blockchain-based platform for securely storing and managing medical data. This project leverages blockchain technology to ensure data integrity, transparency, and accessibility for medical records.
+
+---
+
+## Features
+
+- **Secure Data Storage**: Medical records are stored on a blockchain to ensure immutability.
+- **Database Integration**: Uses MongoDB to persist records for quick retrieval.
+- **Peer-to-Peer Network**: Ensures blockchain synchronization across multiple nodes.
+- **REST API**: Simplifies interaction with the blockchain and database.
+
+---
+
+## Prerequisites
+
+Ensure the following are installed on your system:
+
+- Node.js (>= 14.0.0)
+- MongoDB
+
+---
+
+## Getting Started
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/blockchain-medical-data.git
+cd blockchain-medical-data
 ```
-// Project structure for this blockchain:
 
-// Main file for the blockchain logic
-src/
-  blockchain/
-    block.js    // Defines the Block class
-    blockchain.js  // Defines the Blockchain class
+### 2. Install Dependencies
 
-// API layer to interact with the blockchain
-src/
-  routes/
-    medicalRecords.js  // Route to handle medical data CRUD operations
+```bash
+npm install
+```
 
-// Entry point of the application
-src/
-  app.js  // Initializes the server and routes
+### 3. Configure MongoDB
 
-// Utility folder for helpers or middleware
-src/
-  utils/
-    validateData.js  // Utility to validate incoming medical data
+Start your MongoDB server and ensure it runs on the default port (`27017`). If using a different URI, update the configuration in `config/default.json`:
 
-// Configuration folder
-config/
-  default.json  // Stores configurations such as API keys, ports
+```json
+{
+  "port": 3000,
+  "dbURI": "mongodb://localhost:27017/medicalDB"
+}
+```
 
-// Logging setup
-logs/
-  blockchain.log  // Stores blockchain logs
+### 4. Start the Application
 
-// External integrations
-scripts/
-setup-db.sh
+#### Development Mode
+
+```bash
+npm run dev
+```
+
+#### Production Mode
+
+```bash
+npm start
+```
+
+---
+
+## API Endpoints
+
+### Base URL:
+
+`http://localhost:3000/api/medical`
+
+### Endpoints:
+
+1. **Add Medical Record**
+
+   - **POST** `/add-record`
+   - **Request Body:**
+     ```json
+     {
+       "patientID": "12345",
+       "diagnosis": "Flu",
+       "medication": "Antiviral"
+     }
+     ```
+   - **Response:**
+     ```json
+     {
+       "message": "Record added to blockchain and database",
+       "newBlock": { ... }
+     }
+     ```
+
+2. **Get Blockchain**
+
+   - **GET** `/chain`
+   - **Response:** Returns the full blockchain.
+
+3. **Get All Medical Records**
+
+   - **GET** `/records`
+   - **Response:** Returns all records from MongoDB.
+
+4. **Connect Peer**
+
+   - **POST** `/connect`
+   - **Request Body:**
+     ```json
+     {
+       "peerUrl": "ws://peer-host:peer-port"
+     }
+     ```
+
+---
+
+## Running on Multiple Nodes
+
+1. Start MongoDB and ensure it's accessible to all nodes.
+2. Start the application on different ports and WebSocket ports:
+   ```bash
+   PORT=3001 P2P_PORT=6001 node src/app.js
+   PORT=3002 P2P_PORT=6002 node src/app.js
+   ```
+3. Use the `/connect` endpoint to link peers:
+   ```bash
+   curl -X POST -H "Content-Type: application/json" -d '{"peerUrl": "ws://localhost:6002"}' http://localhost:3001/api/medical/connect
+   ```
+
+---
+
+## Folder Structure
 
 ```
+blockchain-medical-data/
+├── src/
+│   ├── app.js             # Main application file
+│   ├── blockchain/
+│   │   ├── block.js       # Block class
+│   │   └── blockchain.js  # Blockchain class
+│   ├── models/
+│   │   └── medicalRecord.js  # MongoDB schema for medical records
+│   ├── routes/
+│   │   └── medicalRecords.js # API routes
+│   ├── utils/
+│       └── validateData.js   # Utility for validating input data
+├── config/
+│   └── default.json       # Configuration file
+├── scripts/
+│   └── setup-db.sh        # MongoDB setup script
+├── logs/                  # Logs folder
+│   └── blockchain.log     # Blockchain logs
+├── package.json           # Project metadata and dependencies
+└── README.md              # Project documentation
+```
+
+---
+
+## Contributing
+
+1. Fork the repository.
+2. Create a new branch:
+   ```bash
+   git checkout -b feature-name
+   ```
+3. Commit your changes:
+   ```bash
+   git commit -m "Added feature-name"
+   ```
+4. Push to your branch:
+   ```bash
+   git push origin feature-name
+   ```
+5. Open a pull request.
+
+---
+
+## License
+
+This project is licensed under the MIT License. See the `LICENSE` file for details.
+
+
